@@ -126,7 +126,21 @@ public class Main {
 
   public static void ExibirUsuarios() {
     LimparConsole();
-    System.out.println(Arrays.deepToString(users));
+    System.out.println("------------ PROFESSORES ------------");
+    System.out.println();
+    for(int i = 0; i < users.length; i++) {
+      if(users[i][2].equals("P")){
+        System.out.printf("%s : %s\n", users[i][0],users[i][1]);
+      }
+    }
+    System.out.println();
+    System.out.println("--------------  ALUNOS --------------");
+    System.out.println();
+    for(int i = 0; i < users.length; i++) {
+      if(users[i][2].equals("A")){
+        System.out.printf("%s : %s\n", users[i][0],users[i][1]);
+      }
+    }
     System.out.println("PRESSIONE ENTER PARA RETORNAR");
     input.nextLine();
     LimparConsole();
