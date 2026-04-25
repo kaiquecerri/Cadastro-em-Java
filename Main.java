@@ -6,8 +6,6 @@ public class Main {
   }
   
   public static void MenuInicial(){
-    System.out.print("\033[H\033[2J");
-    System.out.flush();
     Scanner input = new Scanner(System.in);
     boolean _continue = true; //DEFINE VARIAVEL PARA ENCERRAR O WHILE
     
@@ -21,15 +19,15 @@ public class Main {
         var inputValue = input.nextInt(); //RECEBE O VALOR DIGITADO
         
         switch (inputValue) {
-            case 0:  Cadastro(); break;
+            case 0:  MenuCadastro(); break;
         }
         
     } while(_continue);
+
+    input.close();
   }
   
-  public static void Cadastro() {
-     System.out.print("\033[H\033[2J");
-    System.out.flush();
+  public static void MenuCadastro() {
     Scanner input = new Scanner(System.in);
     boolean _continue = true; //DEFINE VARIAVEL PARA ENCERRAR O WHILE
     
@@ -44,8 +42,28 @@ public class Main {
         var inputValue = input.nextInt(); //RECEBE O VALOR DIGITADO
         
         switch(inputValue) {
+            case 0: Cadastro('P');
             case 9: MenuInicial(); break;
         }
     } while(_continue);
+
+    input.close();
+  }
+
+  public static void Cadastro(char type) {
+    Scanner input = new Scanner(System.in);
+    boolean _continue = true;
+    do {
+    System.out.println("------------ ConnectArt ------------");
+    System.out.println("INSIRA O NOME DE USUÁRIO:           ");
+    String username = input.nextLine();
+    if(username.length < 3)
+
+    System.out.println("INSIRA A SENHA:                     ");
+    String password = input.nextLine();
+    System.out.println("CONFIRME A SENHA:                     ");
+    String repeatPassword = input.nextLine();
+    } while(_continue);
+    input.close();
   }
 }
