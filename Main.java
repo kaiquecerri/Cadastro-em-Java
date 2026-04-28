@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Main {
-  static String users[][] = new String[0][4];
+  static String users[][] = new String[0][5];
   static Scanner input = new Scanner(System.in);
   public static void main(String args[]) {
     MenuInicial();
@@ -57,6 +57,8 @@ public class Main {
     String username = "";
     String email = "";
     String password = "";
+    String materias = "";
+
     do {                                                             //LOOPING DO NOME DE USUARIO
       System.out.println("INSIRA O NOME DE USUÁRIO:           ");
       username = input.nextLine().toLowerCase();                     //RECEBE O NOME DE USUARIO E DEIXA TUDO MINUSCULO
@@ -131,14 +133,19 @@ public class Main {
     }
     } while(_continue);
 
-    SalvarUsuario(username, email, password, type);
+    if(type == 'P') {
+      System.out.println("INSIRA AS MATÉRIAS QUE VOCÊ ENSINA SEPARADAS POR VÍRGULA: ");
+      materias = input.nextLine();
+    }
+
+    SalvarUsuario(username, email, password, type, materias);
     LimparConsole();
     MenuInicial();
   }
 
-  public static void SalvarUsuario(String username, String email, String password, char type) {
+  public static void SalvarUsuario(String username, String email, String password, char type, String materia) {
     String old_users[][] = users;                                //SALVA O ANTIGO ARRAY
-    users = new String[old_users.length+1][4];                   //CRIA UM ARRAY MAIOR
+    users = new String[old_users.length+1][5];                   //CRIA UM ARRAY MAIOR
     for (int i = 0; i < old_users.length; i++) {                 //SALVA OS VALORES NO NOVO ARRAY
       users[i] = old_users[i];
     }
@@ -146,6 +153,7 @@ public class Main {
     users[users.length-1][1] = email;
     users[users.length-1][2] = password;
     users[users.length-1][3] = String.valueOf(type);
+    users[users.length-1][4] = materia;
     LimparConsole();
     System.out.println("USUARIO CRIADO COM SUCESSO");
     Esperar(2);
@@ -158,7 +166,7 @@ public class Main {
     System.out.println();
     for(int i = 0; i < users.length; i++) {
       if(users[i][3].equals("P")){
-        System.out.printf("%s | %s | %s\n", users[i][0],users[i][1],users[i][2]);
+        System.out.printf("%s | %s | %s | %s\n", users[i][0],users[i][1],users[i][2],users[i][4]);
       }
     }
     System.out.println();
