@@ -1,8 +1,7 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Main {
-  static String users[][] = new String[0][3];
+  static String users[][] = new String[0][4];
   static Scanner input = new Scanner(System.in);
   public static void main(String args[]) {
     MenuInicial();
@@ -56,6 +55,7 @@ public class Main {
   public static void Cadastro(char type) {
     boolean _continue = true;                                        //DEFINE VARIAVEL PARA ENCERRAR O WHILE
     String username = "";
+    String email = "";
     String password = "";
     do {                                                             //LOOPING DO NOME DE USUARIO
       System.out.println("INSIRA O NOME DE USUÁRIO:           ");
@@ -81,6 +81,33 @@ public class Main {
       }
     } while(_continue);
 
+    _continue = true;
+    do {
+      System.out.println("INSIRA SEU EMAIL: ");
+      email = input.nextLine();
+
+      if(EmailValidator.validarEmail(email)) {
+      boolean emailExists = false;
+      for(int _temp = 0; _temp < users.length; _temp++) {          //VERIFICA SE O NOME JA FOI UTILIZADO PASSANDO PELO ARRAY
+          if(users[_temp][1] != null && users[_temp][0].equals(email)) {
+            emailExists = true;
+          }
+        }
+
+      if(emailExists) {                                         //SE TIVER SIDO UTILIZADO REINICIA O LOOPING
+          LimparConsole();
+          System.out.println("ESTE EMAIL JÁ FOI UTILIZADO");
+          Esperar(2);
+        } else 
+          _continue = false;
+        } else {
+        LimparConsole();
+        System.out.println("EMAIL INVALIDO");
+        Esperar(2);
+      }
+
+    } while(_continue);
+
 
     _continue = true;                                                //REINICIA VARIAVEL PARA ENCERRAR O WHILE
     do {
@@ -104,20 +131,21 @@ public class Main {
     }
     } while(_continue);
 
-    SalvarUsuario(username, password, type);
+    SalvarUsuario(username, email, password, type);
     LimparConsole();
     MenuInicial();
   }
 
-  public static void SalvarUsuario(String username, String password, char type) {
+  public static void SalvarUsuario(String username, String email, String password, char type) {
     String old_users[][] = users;                                //SALVA O ANTIGO ARRAY
-    users = new String[old_users.length+1][3];                   //CRIA UM ARRAY MAIOR
+    users = new String[old_users.length+1][4];                   //CRIA UM ARRAY MAIOR
     for (int i = 0; i < old_users.length; i++) {                 //SALVA OS VALORES NO NOVO ARRAY
       users[i] = old_users[i];
     }
-    users[users.length-1][0] = username;                         //SALVA O USUARIO NO ULTIMO VALOR
-    users[users.length-1][1] = password;
-    users[users.length-1][2] = String.valueOf(type);
+    users[users.length-1][0] = username;    
+    users[users.length-1][1] = email;
+    users[users.length-1][2] = password;
+    users[users.length-1][3] = String.valueOf(type);
     LimparConsole();
     System.out.println("USUARIO CRIADO COM SUCESSO");
     Esperar(2);
@@ -129,16 +157,16 @@ public class Main {
     System.out.println("------------ PROFESSORES ------------");
     System.out.println();
     for(int i = 0; i < users.length; i++) {
-      if(users[i][2].equals("P")){
-        System.out.printf("%s : %s\n", users[i][0],users[i][1]);
+      if(users[i][3].equals("P")){
+        System.out.printf("%s | %s | %s\n", users[i][0],users[i][1],users[i][2]);
       }
     }
     System.out.println();
     System.out.println("--------------  ALUNOS --------------");
     System.out.println();
     for(int i = 0; i < users.length; i++) {
-      if(users[i][2].equals("A")){
-        System.out.printf("%s : %s\n", users[i][0],users[i][1]);
+      if(users[i][3].equals("A")){
+        System.out.printf("%s | %s | %s\n", users[i][0],users[i][1],users[i][2]);
       }
     }
     System.out.println("PRESSIONE ENTER PARA RETORNAR");
@@ -153,6 +181,7 @@ public class Main {
   public static void Esperar(int time) {
     try {
         Thread.sleep(time * 1000);
-        } catch(InterruptedException e) {}
-      }
+        } catch(InterruptedException e) {
+        }
+  }
 }
